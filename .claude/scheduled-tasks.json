@@ -1,0 +1,87 @@
+{
+  "_comment": "Claude Code Scheduled Tasks 設定ファイル",
+  "_status": "DISABLED — 時間が決まったら enabled: true に変更して有効化",
+  "_howto": "有効化手順: 1) 時間を決める 2) cron を編集 3) enabled: true に変更",
+
+  "tasks": [
+    {
+      "id": "morning-pipeline",
+      "name": "Morning Pipeline — 朝の記事生成",
+      "cron": "0 5 * * *",
+      "timezone": "Asia/Tokyo",
+      "enabled": false,
+      "_memo": "毎日 05:00 JST — 時間変更は cron を編集",
+      "prompt": "記事を書いて",
+      "flow": [
+        "1. kpi_feedback.md を読み込む（前日の成功/失敗パターンを反映）",
+        "2. Phase 1: KW選定エージェント（記事作成ログの未着手行 or 新規KW選定）",
+        "3. Phase 2: リサーチエージェント（Google News RSS + YouTube）",
+        "4. Phase 3: 設計エージェント（検索上位分析→構成確定）",
+        "5. Phase 4: 執筆エージェント（ドラフト→AI感排除→品質批判）",
+        "6. Phase 5: 品質エージェント（5エージェント95点以上）",
+        "7. Phase 6: 公開エージェント（画像生成+WP公開）",
+        "8. Phase 7: 分析エージェント（公開後処理）",
+        "9. 実行ログをスプレッドシート「エラーログ」タブに記録",
+        "10. 完了通知（将来: Slack DM等）"
+      ]
+    },
+    {
+      "id": "afternoon-pipeline",
+      "name": "Afternoon Pipeline — 午後の記事生成",
+      "cron": "0 14 * * *",
+      "timezone": "Asia/Tokyo",
+      "enabled": false,
+      "_memo": "毎日 14:00 JST — 時間変更は cron を編集",
+      "prompt": "記事を書いて",
+      "flow": [
+        "1. kpi_feedback.md を読み込む（当日朝の成功/失敗パターンを反映）",
+        "2. Phase 1: KW選定エージェント（記事作成ログの未着手行 or 新規KW選定）",
+        "3. Phase 2: リサーチエージェント（Google News RSS + YouTube）",
+        "4. Phase 3: 設計エージェント（検索上位分析→構成確定）",
+        "5. Phase 4: 執筆エージェント（ドラフト→AI感排除→品質批判）",
+        "6. Phase 5: 品質エージェント（5エージェント95点以上）",
+        "7. Phase 6: 公開エージェント（画像生成+WP公開）",
+        "8. Phase 7: 分析エージェント（公開後処理）",
+        "9. 実行ログをスプレッドシート「エラーログ」タブに記録",
+        "10. 完了通知（将来: Slack DM等）"
+      ]
+    },
+    {
+      "id": "daily-kpi",
+      "name": "Daily KPI Report — 日次レポート",
+      "cron": "13 22 * * *",
+      "timezone": "Asia/Tokyo",
+      "enabled": false,
+      "_memo": "毎日 22:13 JST",
+      "prompt": "KPI確認",
+      "flow": [
+        "1. WordPress REST APIで公開記事数・最新投稿を取得",
+        "2. GA4 Data APIでPV・エンゲージメント時間を取得（設定済みの場合）",
+        "3. GSC Data APIで表示回数・CTR・平均順位を取得（設定済みの場合）",
+        "4. サイトマップの登録状況を確認",
+        "5. 成功パターン・失敗パターンを分析",
+        "6. kpi_feedback.md を更新",
+        "7. スプレッドシート「KPIレポート」タブに新行を追加",
+        "8. 完了通知（将来: Slack DM等）"
+      ]
+    },
+    {
+      "id": "weekly-optimize",
+      "name": "Weekly Optimize — 週次最適化",
+      "cron": "23 10 * * 1",
+      "timezone": "Asia/Tokyo",
+      "enabled": false,
+      "_memo": "毎週月曜 10:23 JST",
+      "prompt": "リライト",
+      "flow": [
+        "1. 公開済み記事の検索順位をGSCで確認",
+        "2. カニバリゼーション（共食い）している記事を検出",
+        "3. 順位が落ちている記事をリライト候補として抽出",
+        "4. 対象記事のリライトを実行（Phase 4〜5相当）",
+        "5. 内部リンクの最適化（新記事への内部リンクを追加）",
+        "6. スプレッドシート「リライトログ」タブに記録",
+        "7. context/MEMORY.md に学習内容を追記"
+      ]
+    }
+  ]
+}
