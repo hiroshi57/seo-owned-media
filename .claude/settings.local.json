@@ -1,0 +1,13 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(curl -s \"https://digitalidentity.co.jp/blog/wp-json/wp/v2/posts?per_page=1\")",
+      "Bash(curl -s -u \"otsuki:7ZgZ z0IT OO1t 7SNS dnvi AjZu\" \"https://digitalidentity.co.jp/blog/wp-json/wp/v2/users/me\")",
+      "Bash(bash *)",
+      "Bash(pip install *)",
+      "Bash(pip show *)",
+      "Bash(python3 *)",
+      "Bash(git add *)"
+    ]
+  }
+}
