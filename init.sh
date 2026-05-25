@@ -11,7 +11,9 @@ echo "======================================"
 
 # .env 読み込み
 if [ -f ".env" ]; then
-  export $(grep -v '^#' .env | xargs)
+  set -a
+  source .env
+  set +a
   echo "[OK] .env ファイルを読み込みました"
 else
   echo "[ERROR] .env ファイルが見つかりません"

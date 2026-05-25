@@ -3,6 +3,7 @@
 credentials.json
 sheets-token.json
 indexing-service-account.json
+WordPress REST API.txt
 
 # 生成ファイル
 automation/images/
